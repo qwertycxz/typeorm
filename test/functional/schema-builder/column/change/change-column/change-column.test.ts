@@ -245,7 +245,10 @@ describe("schema builder > change column", () => {
 
                 const queryRunner = dataSource.createQueryRunner()
 
-                if (dataSource.driver.options.type === "postgres")
+                if (
+                    dataSource.driver.options.type === "bun-postgres" ||
+                    dataSource.driver.options.type === "postgres"
+                )
                     await queryRunner.query(
                         `CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`,
                     )
@@ -256,7 +259,10 @@ describe("schema builder > change column", () => {
                 idColumn.generationStrategy = "uuid"
 
                 // depending on driver, we must change column and referenced column types
-                if (dataSource.driver.options.type === "postgres") {
+                if (
+                    dataSource.driver.options.type === "bun-postgres" ||
+                    dataSource.driver.options.type === "postgres"
+                ) {
                     idColumn.type = "uuid"
                 } else if (dataSource.driver.options.type === "mssql") {
                     idColumn.type = "uniqueidentifier"
@@ -272,6 +278,7 @@ describe("schema builder > change column", () => {
                 await queryRunner.release()
 
                 if (
+                    dataSource.driver.options.type === "bun-postgres" ||
                     dataSource.driver.options.type === "postgres" ||
                     dataSource.driver.options.type === "mssql"
                 ) {
@@ -320,7 +327,10 @@ describe("schema builder > change column", () => {
                 idColumn.generationStrategy = "uuid"
 
                 // depending on driver, we must change column and referenced column types
-                if (dataSource.driver.options.type === "postgres") {
+                if (
+                    dataSource.driver.options.type === "bun-postgres" ||
+                    dataSource.driver.options.type === "postgres"
+                ) {
                     idColumn.type = "uuid"
                     teacherColumn.type = "uuid"
                 } else if (dataSource.driver.options.type === "mssql") {
@@ -341,6 +351,7 @@ describe("schema builder > change column", () => {
                 await queryRunner.release()
 
                 if (
+                    dataSource.driver.options.type === "bun-postgres" ||
                     dataSource.driver.options.type === "postgres" ||
                     dataSource.driver.options.type === "mssql"
                 ) {
@@ -373,6 +384,7 @@ describe("schema builder > change column", () => {
                 // Skip the contents of this test if not one of the drivers that support comments
                 if (
                     !(
+                        dataSource.driver.options.type === "bun-postgres" ||
                         dataSource.driver.options.type === "cockroachdb" ||
                         dataSource.driver.options.type === "postgres" ||
                         dataSource.driver.options.type === "sap" ||

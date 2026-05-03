@@ -5,6 +5,7 @@ export type DatabaseType =
     | "aurora-mysql"
     | "aurora-postgres"
     | "better-sqlite3"
+    | "bun-postgres"
     | "capacitor"
     | "cockroachdb"
     | "cordova"
