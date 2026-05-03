@@ -57,6 +57,8 @@ body:
           required: false
         - label: better-sqlite3
           required: false
+        - label: bun-postgres
+          required: false
         - label: capacitor
           required: false
         - label: cockroachdb
