@@ -236,6 +236,8 @@ export const connectionToDataSource = (file: FileInfo, api: API) => {
         AuroraPostgresDataSourceOptions: ["aurora-postgres"],
         BetterSqlite3ConnectionOptions: ["better-sqlite3"],
         BetterSqlite3DataSourceOptions: ["better-sqlite3"],
+        BunPostgresConnectionOptions: ["bun-postgres"],
+        BunPostgresDataSourceOptions: ["bun-postgres"],
         CapacitorConnectionOptions: ["capacitor"],
         CapacitorDataSourceOptions: ["capacitor"],
         CockroachConnectionOptions: ["cockroachdb"],
