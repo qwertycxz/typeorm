@@ -11,8 +11,9 @@ describe("RedisQueryResultCache Integration", function () {
     let caches: RedisQueryResultCache[] = []
 
     before(async function () {
-        // testcontainers are not supported on Windows
-        if (process.platform === "win32") {
+        // testcontainers are not supported on neither Windows nor Bun
+        // https://github.com/oven-sh/bun/issues/21342
+        if (process.platform === "win32" || process.versions.bun) {
             return this.skip()
         }
 
