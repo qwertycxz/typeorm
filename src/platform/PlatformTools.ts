@@ -137,6 +137,12 @@ export class PlatformTools {
                  */
                 case "react-native-sqlite-storage":
                     return require("react-native-sqlite-storage")
+
+                /**
+                 * bun
+                 */
+                case "bun-postgres":
+                    return require("bun")
             }
         } catch (err) {
             return require(

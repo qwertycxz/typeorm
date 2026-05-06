@@ -110,6 +110,7 @@
     "@stryker-mutator/core": "^9.6.1",
     "@stryker-mutator/mocha-runner": "^9.6.1",
     "@tsconfig/node20": "^20.1.9",
+    "@types/bun": "^1.3.13",
     "@types/chai": "^5.2.3",
     "@types/chai-as-promised": "^8.0.2",
     "@types/debug": "^4.1.13",

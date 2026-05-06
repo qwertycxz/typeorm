@@ -1,12 +1,11 @@
 import type { BaseDataSourceOptions } from "../../data-source/BaseDataSourceOptions"
 import type { ReplicationMode } from "../types/ReplicationMode"
-import type { BunPostgresConnectionCredentialsOptions } from "./BunPostgresConnectionCredentialsOptions"
 
 /**
  * Postgres-specific connection options.
  */
 export interface BunPostgresDataSourceOptions
-    extends BaseDataSourceOptions, BunPostgresConnectionCredentialsOptions {
+    extends BaseDataSourceOptions, Bun.SQL.PostgresOrMySQLOptions {
     /**
      * Database type.
      */
@@ -19,15 +18,9 @@ export interface BunPostgresDataSourceOptions
 
     /**
      * The driver object
-     * This defaults to `require("pg")`.
+     * This defaults to `require("bun")`.
      */
-    readonly driver?: any
-
-    /**
-     * The driver object
-     * This defaults to `require("pg-native")`.
-     */
-    readonly nativeDriver?: any
+    readonly driver?: typeof Bun
 
     /**
      * A boolean determining whether to pass time values in UTC or local time. (default: false).
@@ -41,12 +34,12 @@ export interface BunPostgresDataSourceOptions
         /**
          * Master server used by orm to perform writes.
          */
-        readonly master: BunPostgresConnectionCredentialsOptions
+        readonly master: Bun.SQL.PostgresOrMySQLOptions
 
         /**
          * List of read-from servers (slaves).
          */
-        readonly slaves: BunPostgresConnectionCredentialsOptions[]
+        readonly slaves: Bun.SQL.PostgresOrMySQLOptions[]
 
         /**
          * Default connection pool to use for SELECT queries
@@ -57,50 +50,16 @@ export interface BunPostgresDataSourceOptions
     }
 
     /**
-     * The milliseconds before a timeout occurs during the initial connection to the postgres
-     * server. If undefined, or set to 0, there is no timeout. Defaults to undefined.
-     */
-    readonly connectTimeoutMS?: number
-
-    /**
      * The Postgres extension to use to generate UUID columns. Defaults to uuid-ossp.
      * If pgcrypto is selected, TypeORM will use the gen_random_uuid() function from this extension.
      * If uuid-ossp is selected, TypeORM will use the uuid_generate_v4() function from this extension.
      */
     readonly uuidExtension?: "pgcrypto" | "uuid-ossp"
 
-    /*
-     * Function handling errors thrown by drivers pool.
-     * Defaults to logging error with `warn` level.
-     */
-    readonly poolErrorHandler?: (err: any) => any
-
-    /**
-     * Include notification messages from Postgres server in client logs
-     */
-    readonly logNotifications?: boolean
-
     /**
      * Automatically install postgres extensions
      */
     readonly installExtensions?: boolean
-
-    /**
-     * Return 64-bit integers (int8) as JavaScript integers.
-     *
-     * Because JavaScript doesn't have support for 64-bit integers node-postgres cannot confidently
-     * parse int8 data type results as numbers because if you have a huge number it will overflow
-     * and the result you'd get back from node-postgres would not be the result in the database.
-     * That would be a very bad thing so node-postgres just returns int8 results as strings and leaves the parsing up to you.
-     *
-     * Enabling parseInt8 will cause node-postgres to parse int8 results as numbers.
-     * Note: the maximum safe integer in js is: Number.MAX_SAFE_INTEGER (`+2^53`)
-     *
-     * @see [JavaScript Number objects](http://ecma262-5.com/ELS5_HTML.htm#Section_8.5)
-     * @see [node-postgres int8 explanation](https://github.com/brianc/node-pg-types#:~:text=on%20projects%3A%20return-,64%2Dbit%20integers,-(int8)%20as)
-     * @see [node-postgres defaults.parseInt8 implementation](https://github.com/brianc/node-postgres/blob/pg%408.8.0/packages/pg/lib/defaults.js#L80)
-     */
-    readonly parseInt8?: boolean
 
     /**
      * List of additional Postgres extensions to be installed in the database.
